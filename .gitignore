@@ -48,7 +48,7 @@ packages/
 /testbed/testcms
 #Xcode
 libtool
-Build
+# Build 先忽略
 DerivedData
 .libs
 /utils/transicc/transicc
