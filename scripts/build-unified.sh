@@ -255,15 +255,23 @@ build_platform() {
         linux-x64)
             print_info "配置 Linux x64 构建..."
             
-            # 检查 GCC
-            if ! command -v gcc &> /dev/null; then
-                print_error "未找到 gcc，请安装 GCC"
-                print_info "在 Ubuntu 上: sudo apt-get install build-essential"
+            # 检查交叉编译工具链
+            if ! command -v x86_64-linux-musl-gcc &> /dev/null; then
+                print_error "未找到 x86_64-linux-musl-gcc 交叉编译工具链"
+                print_info "请运行: brew install FiloSottile/musl-cross/musl-cross"
                 return 1
             fi
             
+            # 设置交叉编译环境变量
+            export CC=x86_64-linux-musl-gcc
+            export CXX=x86_64-linux-musl-g++
+            export AR=x86_64-linux-musl-ar
+            export RANLIB=x86_64-linux-musl-ranlib
+            export STRIP=x86_64-linux-musl-strip
+            export LD=x86_64-linux-musl-ld
+            
             CONFIGURE_ARGS=(
-                --host=x86_64-linux-gnu
+                --host=x86_64-linux-musl
                 --build=$("$PROJECT_ROOT/config.guess")
                 --prefix="$BUILD_DIR/install"
             )
