@@ -87,6 +87,23 @@ build/
 - **Windows**: MinGW-w64 或 Visual Studio
 - **Linux**: GCC 和开发工具
 
+### 交叉编译工具链
+
+#### macOS 上安装交叉编译工具
+```bash
+# Windows x64 交叉编译工具
+brew install mingw-w64
+
+# Linux x64 交叉编译工具
+brew install x86_64-linux-gnu-binutils
+brew install FiloSottile/musl-cross/musl-cross
+```
+
+#### 工具链说明
+- **Windows x64**: 使用 MinGW-w64 工具链，生成 Windows DLL
+- **Linux x64**: 使用 musl 交叉编译工具链，生成静态链接的 Linux 可执行文件
+- **macOS**: 使用原生 clang 编译器
+
 ### 可选依赖
 - **JPEG**: libjpeg-turbo 或 libjpeg
 - **TIFF**: libtiff
@@ -124,19 +141,31 @@ make install
 # macOS 上安装
 brew install mingw-w64
 
+# 验证安装
+x86_64-w64-mingw32-gcc --version
+
 # 然后运行
 ./scripts/build-unified.sh windows-x64
 ```
 
 ### Linux 交叉编译
-需要安装 Linux 交叉编译工具链：
+需要安装 musl 交叉编译工具链：
 ```bash
 # macOS 上安装
-brew install x86_64-linux-gnu-gcc
+brew install x86_64-linux-gnu-binutils
+brew install FiloSottile/musl-cross/musl-cross
+
+# 验证安装
+x86_64-linux-musl-gcc --version
 
 # 然后运行
 ./scripts/build-unified.sh linux-x64
 ```
+
+### 交叉编译优势
+- **统一构建环境**: 在 macOS 上构建所有平台
+- **无系统依赖**: Linux 版本使用 musl libc，完全自包含
+- **生产就绪**: 生成的库文件可直接用于生产环境
 
 ## 故障排除
 
