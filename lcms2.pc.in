@@ -1,11 +1,10 @@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-libdir=@libdir@
-includedir=@includedir@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
 
-Name: @PACKAGE@
-Description: LCMS Color Management Library
-Version: @VERSION@
-Libs: -L${libdir} -llcms2 @LIB_PLUGINS@
-Libs.private: @LIB_MATH@ @LIB_THREAD@
+Name: lcms2
+Description: Little CMS 2 color management library
+Version: @LCMS2_VERSION@
+Libs: -L${libdir} -llcms2
 Cflags: -I${includedir}
